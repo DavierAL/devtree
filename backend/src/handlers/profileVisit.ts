@@ -22,7 +22,8 @@ export const trackVisit = async (req: Request, res: Response) => {
         const visitorIp = req.ip || req.socket.remoteAddress || 'unknown'
         const userAgent = req.get('user-agent') || 'unknown'
 
-        // Rate limiting: verificar si ya existe una visita de esta IP en la última hora
+        // Rate limiting logic removed per user request
+        /*
         const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000)
         const recentVisit = await ProfileVisit.findOne({
             userId: user._id,
@@ -30,13 +31,13 @@ export const trackVisit = async (req: Request, res: Response) => {
             visitedAt: { $gte: oneHourAgo }
         })
 
-        // Si ya visitó recientemente, no contar la visita pero retornar éxito
         if (recentVisit) {
             return res.status(200).json({
                 message: 'Visita ya registrada recientemente',
                 counted: false
             })
         }
+        */
 
         // Registrar la nueva visita
         const visit = new ProfileVisit({
