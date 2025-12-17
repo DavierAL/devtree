@@ -1,6 +1,6 @@
-import mongoose, {Document, Schema} from 'mongoose'
+import mongoose, { Document, Schema } from 'mongoose'
 
-export interface IUser extends Document{
+export interface IUser extends Document {
     handle: string
     name: string
     email: string
@@ -8,6 +8,7 @@ export interface IUser extends Document{
     description: string
     image: string
     links: string
+    visits: number
 }
 
 const userSchema = new Schema({
@@ -21,7 +22,7 @@ const userSchema = new Schema({
     },
     name: {
         type: String,
-        required : true,
+        required: true,
         trim: true //es una función que quita espacios en blanco
     },
     email: {
@@ -44,9 +45,13 @@ const userSchema = new Schema({
         type: String,
         default: ''
     },
-    links : {
+    links: {
         type: String,
         default: '[]'
+    },
+    visits: {
+        type: Number,
+        default: 0
     }
 })
 

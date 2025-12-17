@@ -1,12 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
 import { getPublicProfile, trackProfileVisit } from "../api/DevTreeApi";
 import { useEffect } from "react";
-import type { SocialNetwork } from "../types";
+import type { SocialNetwork, User } from "../types";
 
 export default function PublicProfileView() {
   const { handle } = useParams<{ handle: string }>();
 
+  const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["publicProfile", handle],
     queryFn: () => getPublicProfile(handle!),
@@ -17,11 +18,25 @@ export default function PublicProfileView() {
   // Registrar visita al perfil
   useEffect(() => {
     if (handle) {
-      trackProfileVisit(handle).catch(() => {
-        // Silenciosamente ignorar errores de tracking
-      });
+      trackProfileVisit(handle)
+        .then(() => {
+          // Actualizar el contador localmente después de registrar la visita
+          queryClient.setQueryData(
+            ["publicProfile", handle],
+            (prevData: User | undefined) => {
+              if (!prevData) return prevData;
+              return {
+                ...prevData,
+                visits: (prevData.visits || 0) + 1,
+              };
+            }
+          );
+        })
+        .catch(() => {
+          // Silenciosamente ignorar errores de tracking
+        });
     }
-  }, [handle]);
+  }, [handle, queryClient]);
 
   if (isLoading) {
     return (

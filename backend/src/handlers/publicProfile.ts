@@ -21,7 +21,8 @@ export const getPublicProfile = async (req: Request, res: Response) => {
             name: user.name,
             description: user.description,
             image: user.image,
-            links: user.links
+            links: user.links,
+            visits: user.visits
         })
     } catch (e: any) {
         console.error(e)
