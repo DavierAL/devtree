@@ -3,13 +3,13 @@ import SearchForm from "./SearchForm";
 
 export default function HomeView() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-x-hidden">
       <Header />
 
-      <main className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+      <main className="mx-auto max-w-6xl px-6 py-10 md:py-20">
         <div className="grid items-center gap-12 md:grid-cols-2">
           {/* Left: Copy + Form */}
-          <section className="space-y-6">
+          <section className="space-y-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-4 py-2 text-sm text-slate-300">
               <span className="h-2 w-2 rounded-full bg-cyan-400" />
               Perfil en un enlace • rápido y personalizable

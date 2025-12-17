@@ -55,15 +55,18 @@ export default function SearchForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-      <div className="relative flex items-center bg-white px-2 rounded-md border border-slate-200">
-        <label htmlFor="handle" className="text-slate-600 pr-2">
+      <div className="relative flex flex-col md:flex-row md:items-center bg-white px-2 py-2 md:py-0 rounded-md border border-slate-200 gap-2 md:gap-0">
+        <label
+          htmlFor="handle"
+          className="text-slate-600 pl-2 md:pr-2 text-sm md:text-base font-medium"
+        >
           devtree.com/
         </label>
         <input
           id="handle"
           type="text"
-          className="border-none bg-transparent p-2 focus:ring-0 flex-1 text-slate-900 placeholder:text-slate-400"
-          placeholder="elonmusk, zuck, jeffbezos"
+          className="border-none bg-transparent p-2 focus:ring-0 flex-1 text-slate-900 placeholder:text-slate-400 min-w-0 font-medium"
+          placeholder="usuario"
           {...register("handle", {
             required: "Un Nombre de Usuario es obligatorio",
           })}
