@@ -47,6 +47,7 @@ export const trackVisit = async (req: Request, res: Response) => {
         })
 
         await visit.save()
+        await User.findByIdAndUpdate(user._id, { $inc: { visits: 1 } })
 
         res.status(201).json({
             message: 'Visita registrada correctamente',
