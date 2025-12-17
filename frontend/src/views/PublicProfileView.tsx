@@ -19,18 +19,20 @@ export default function PublicProfileView() {
   useEffect(() => {
     if (handle) {
       trackProfileVisit(handle)
-        .then(() => {
-          // Actualizar el contador localmente después de registrar la visita
-          queryClient.setQueryData(
-            ["publicProfile", handle],
-            (prevData: User | undefined) => {
-              if (!prevData) return prevData;
-              return {
-                ...prevData,
-                visits: (prevData.visits || 0) + 1,
-              };
-            }
-          );
+        .then((data) => {
+          // Actualizar el contador localmente solo si la visita fue contada (no rate-limited)
+          if (data.counted) {
+            queryClient.setQueryData(
+              ["publicProfile", handle],
+              (prevData: User | undefined) => {
+                if (!prevData) return prevData;
+                return {
+                  ...prevData,
+                  visits: (prevData.visits || 0) + 1,
+                };
+              }
+            );
+          }
         })
         .catch(() => {
           // Silenciosamente ignorar errores de tracking
